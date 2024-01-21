@@ -1,5 +1,4 @@
 
-import { Typography } from "@mui/material";
 import Form from "./Components/Form"
 import FormDataTable from "./Components/FormDataTable"
 import { useSelector } from "react-redux";
@@ -8,6 +7,7 @@ import { useSelector } from "react-redux";
 
 function App() {
   const tableData = useSelector((state ) => state.tableData);
+  
   console.log(tableData)
   // const data = [
    
