@@ -45,9 +45,9 @@ const idOptions = [
 
 const Form: React.FC = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [options, setOptions] = useState<any[]>([]);
+  const [options, setOptions] = useState<unknown[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [apiError, setApiError] = useState<string | null>(null);
+ 
   const dispatch = useDispatch();
 
   const formik = useFormik<FormData>({
@@ -100,10 +100,10 @@ const Form: React.FC = () => {
           .string()
           .matches(/^\d{6}$/, "Pincode should be exactly 6 digits"),
       }),
-    onSubmit: (values) => {
+    onSubmit: (values :FormData ) => {
       console.log("Form Data:", values);
       if (activeStep === steps.length - 1) {
-        dispatch(addToTable(values));
+        dispatch(addToTable( values));
       } else {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
@@ -116,21 +116,20 @@ const Form: React.FC = () => {
       const response = await axios.get(
         `https://restcountries.com/v3.1/name/${inputValue}`
       );
-      const countries = response.data.map((country: any) => ({
-        label: country.name.common,
-        value: country.name.common,
+      const countries = response.data.map((country: unknown) => ({
+        label: (country as { name: { common: string } }).name.common,
+        value: (country as { name: { common: string } }).name.common,
       }));
       setOptions(countries);
-      setApiError(null);
+     
     } catch (error) {
       console.error("Error fetching countries:", error);
-      setApiError("Error fetching countries");
     } finally {
       setLoading(false);
     }
   };
 
-  const renderInput = (field: any) => (
+  const renderInput = (field: undefined) => (
     <>
       <TextField
         {...field}
@@ -138,8 +137,8 @@ const Form: React.FC = () => {
         margin="normal"
         size="small"
         fullWidth
-        error={!!formik.errors[field.name]}
-        helperText={formik.errors[field.name] || ""}
+        error={!!formik.errors[field.name as keyof FormData]}
+        helperText={formik.errors[field.name as keyof FormData] || ""}
       />
     </>
   );

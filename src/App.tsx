@@ -1,4 +1,3 @@
-
 import Form from "./Components/Form"
 import FormDataTable from "./Components/FormDataTable"
 import { useSelector } from "react-redux";
@@ -6,8 +5,8 @@ import { useSelector } from "react-redux";
 
 
 function App() {
-  const tableData = useSelector((state ) => state.tableData);
-  
+  // const [data,setData] = useState<any[]>([])
+  const tableData = useSelector((state: { tableData: unknown[] }) => state.tableData);
   console.log(tableData)
   // const data = [
    
@@ -112,6 +111,7 @@ function App() {
     { data: "fullName", title: "Full Name" },
     {data:"phone",title:"Phone"},
     {data:"idType",title:"Id Type"},
+    {data:"age",title:"Age"},
     {data:"id",title:"Id"},
     {data:"sex" , title :"Sex"},
     {data:"address",title:"Address"},
